@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+  body{
+    min-height:100svh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:#0f172a;
+    font-family:georgia;
+  }
+
+  .box{
+    background:#020617;
+    width:340px;
+    padding:20px;
+    border-radius:20px;
+    color:white;
+  }
+
+  .item{
+    background:#111827;
+    padding:10px;
+    border-radius:12px;
+    margin:10px 0;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+  }
+
+  button{
+    padding:6px 10px;
+    border:none;
+    border-radius:12px;
+    cursor:pointer;
+    font-family:georgia;
+    margin-left:5px;
+  }
+
+  .edit{ background:#3b82f6; color:white; }
+  .delete{ background:#ef4444; color:white; }
+</style>
+</head>
+
+<body>
+
+<div class="box">
+  <h3>Saved Passwords</h3>
+  <div id="list"></div>
+</div>
+
+<script>
+let list = document.getElementById("list");
+
+function loadPasswords(){
+  list.innerHTML = "";
+
+  let passwords = JSON.parse(localStorage.getItem("passwords")) || [];
+
+  if(passwords.length === 0){
+    list.innerHTML = "<p>No password saved</p>";
+    return;
+  }
+
+  passwords.forEach((pass, index) => {
+    let div = document.createElement("div");
+    div.className = "item";
+
+    div.innerHTML = `
+      <span>${pass}</span>
+      <div>
+        <button class="edit" onclick="editPass(${index})">Edit</button>
+        <button class="delete" onclick="deletePass(${index})">Delete</button>
+      </div>
+    `;
+
+    list.appendChild(div);
+  });
+}
+
+function editPass(i){
+  let passwords = JSON.parse(localStorage.getItem("passwords"));
+  let newPass = prompt("Enter new password");
+
+  if(newPass && newPass.length >= 8){
+    passwords[i] = newPass;
+    localStorage.setItem("passwords", JSON.stringify(passwords));
+    loadPasswords();
+  } else {
+    alert("Password must be at least 8 characters");
+  }
+}
+
+function deletePass(i){
+  let passwords = JSON.parse(localStorage.getItem("passwords"));
+  passwords.splice(i, 1);
+  localStorage.setItem("passwords", JSON.stringify(passwords));
+  loadPasswords();
+}
+
+loadPasswords();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <style>
+    * {
+      margin:0;
+      padding:0;
+    }
+    
+    body {
+      position:absolute;
+      min-height:100svh;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      flex-direction:column;
+      background:#0f172a;
+    }
+    
+    .card {
+      position:relative;
+      height:400px;
+      width:349px;
+      background:#020617;
+      border-radius:30px;
+      left:20px;
+    }
+    
+    #text {
+      position:absolute;
+      height:50px;
+      width:260px;
+      background:#111827;
+      border-radius:20px;
+      border:2px solid #1e293b;
+      font-family:georgia;
+      outline:none;
+      box-shadow:0 0 0 1px #22c55e;
+      letter-spacing:0.3px;
+      color:#64748b;
+      top:110px;
+      left:45px;
+    }
+    
+    #btn {
+      position:absolute;
+      height:50px;
+      width:189px;
+      background:#22e66c;
+      color:#ffffff;
+      top:280px;
+      left:85px;
+      font-family:georgia;
+      border:3px solid #16a34a;
+      border-radius:30px;
+      background:;
+    }
+    
+    #result {
+      position:absolute;
+      top:363px;
+      left:81px;
+      font-family:georgia;
+    }
+    #btnx {
+      position:absolute;
+      height:60px;
+      width:120px;
+      top:630px;
+      left:60px;
+      background:#0DADFF;
+      border-radius:30px;
+      border:2px solid #0009FF;
+    }
+    #btny {
+      position:absolute;
+      height:60px;
+      width:120px;
+      top:630px;
+      left:220px;
+      background:#0DADFF;
+      border-radius:30px;
+      border:2px solid #0009FF;
+    }
+  </style>
+  
+</head>
+
+<body>
+  <button id="btnx">privicy</button>
+  <button id="btny">contact me</button>
+  <div class="card">
+    
+    <input type="text" id="text" placeholder="Check you password's strength">
+    
+    <button id="btn">Save</button>
+    
+    <p id="result"></p>
+    
+  </div>
+  
+<script>
+let text = document.getElementById("text");
+let btn = document.getElementById("btn");
+let btnx = document.getElementById("btnx");
+let btny = document.getElementById("btny");
+
+btnx.addEventListener("click", () => {
+  window.location.href = "privicy.html";
+});
+
+btny.addEventListener("click", () => {
+  window.location.href = "contact.html";
+});
+
+btn.addEventListener("click", () => {
+  let input = text.value.trim();
+
+  if(input.length < 8){
+    alert("Password must be at least 8 characters");
+    return;
+  }
+
+  // 🔹 get old passwords
+  let passwords = JSON.parse(localStorage.getItem("passwords")) || [];
+
+  // 🔹 add new password
+  passwords.push(input);
+
+  // 🔹 save again
+  localStorage.setItem("passwords", JSON.stringify(passwords));
+
+  text.value = "";
+
+  window.location.href = "save.html";
+});
+</script>
+  
+</body>
+</html>
